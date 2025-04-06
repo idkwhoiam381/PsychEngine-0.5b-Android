@@ -4,7 +4,7 @@ package;
 import Discord.DiscordClient;
 #end
 import editors.ChartingState;
-import flash.text.TextField;
+import openfl.text.TextField;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.addons.display.FlxGridOverlay;
@@ -163,16 +163,24 @@ class FreeplayState extends MusicBeatState
 		var textBG:FlxSprite = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
 		textBG.alpha = 0.6;
 		add(textBG);
+		#if mobile
+		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press X to listen to the Song / Press C to open the Gameplay Changers Menu / Press Y to Reset your Score and Accuracy.", 18);
+		#else
 		var text:FlxText = new FlxText(textBG.x, textBG.y + 4, FlxG.width, "Press SPACE to open the Gameplay Changers Menu / Press RESET to Reset your Score and Accuracy.", 18);
-		text.setFormat(Paths.font("vcr.ttf"), 18, FlxColor.WHITE, RIGHT);
+		#end
+		text.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
 		text.scrollFactor.set();
 		add(text);
+		addVirtualPad("FULL", "A_B_C_X_Y_Z");
 		super.create();
 	}
 
 	override function closeSubState() {
 		changeSelection();
-		super.closeSubState();
+		persistentUpdate = true;
+ 		super.closeSubState();
+ 		removeVirtualPad();
+ 		addVirtualPad("FULL", "A_B_C_X_Y_Z");
 	}
 
 	public function addSong(songName:String, weekNum:Int, songCharacter:String, color:Int)
@@ -230,10 +238,10 @@ class FreeplayState extends MusicBeatState
 		var upP = controls.UI_UP_P;
 		var downP = controls.UI_DOWN_P;
 		var accepted = controls.ACCEPT;
-		var space = FlxG.keys.justPressed.SPACE;
+		var space = FlxG.keys.justPressed.SPACE || _virtualpad.buttonX.justPressed;
 
 		var shiftMult:Int = 1;
-		if(FlxG.keys.pressed.SHIFT) shiftMult = 3;
+		if(FlxG.keys.pressed.SHIFT || _virtualpad.buttonZ.pressed) shiftMult = 3;
 
 		if (upP)
 		{
@@ -258,6 +266,15 @@ class FreeplayState extends MusicBeatState
 			MusicBeatState.switchState(new MainMenuState());
 		}
 
+		#if mobile
+		if(_virtualpad.buttonC.justPressed)
+		{
+			persistentUpdate = false;
+			openSubState(new GameplayChangersSubstate());
+			removeVirtualPad();
+		}
+		#end
+
 		if(space)
 		{
 			if(instPlaying != curSelected)
@@ -281,7 +298,9 @@ class FreeplayState extends MusicBeatState
 				instPlaying = curSelected;
 				#end
 			}
+			#if !mobile
 			openSubState(new GameplayChangersSubstate());
+			#end
 		}
 
 		else if (accepted)
@@ -319,8 +338,10 @@ class FreeplayState extends MusicBeatState
 					
 			destroyFreeplayVocals();
 		}
-		else if(controls.RESET)
+		else if(controls.RESET || _virtualpad.buttonY.justPressed)
 		{
+			persistentUpdate = false;
+			removeVirtualPad();
 			openSubState(new ResetScoreSubState(songs[curSelected].songName, curDifficulty, songs[curSelected].songCharacter));
 			FlxG.sound.play(Paths.sound('scrollMenu'));
 		}

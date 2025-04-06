@@ -103,6 +103,7 @@ class TitleState extends MusicBeatState
 		FlxG.keys.preventDefaultKeys = [TAB];
 
 		PlayerSettings.init();
+		MobileData.init();
 
 		curWacky = FlxG.random.getObject(getIntroTextShit());
 

@@ -112,6 +112,9 @@ class ControlsSubState extends MusicBeatSubstate {
 			}
 		}
 		changeSelection();
+		
+		addVirtualPad("FULL", "A_B");
+		addVirtualPadCamera();
 	}
 
 	var leaving:Bool = false;

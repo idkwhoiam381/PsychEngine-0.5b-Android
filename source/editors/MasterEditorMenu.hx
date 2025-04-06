@@ -79,6 +79,7 @@ class MasterEditorMenu extends MusicBeatState
 		changeDirectory();
 		#end
 		changeSelection();
+		addVirtualPad("FULL", "A_B");
 		super.create();
 	}
 

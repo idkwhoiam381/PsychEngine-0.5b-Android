@@ -125,6 +125,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 
 		changeSelection();
 		reloadCheckboxes();
+		addVirtualPad('FULL', 'A_B_C');
 	}
 
 	public function addOption(option:Option) {
@@ -240,7 +241,7 @@ class BaseOptionsMenu extends MusicBeatSubstate
 				}
 			}
 
-			if(controls.RESET)
+			if(controls.RESET || _virtualpad.buttonC.justPressed)
 			{
 				for (i in 0...optionsArray.length)
 				{
