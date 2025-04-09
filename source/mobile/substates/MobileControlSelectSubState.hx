@@ -21,7 +21,7 @@ using StringTools;
 class MobileControlSelectSubState extends MusicBeatSubstate
 {
     var vpad:FlxVirtualPad;
-    var newhbox:FlxNewHitbox;
+    var hitbox:FlxHitbox;
     public static var upPozition:FlxText;
     public static var downPozition:FlxText;
     public static var leftPozition:FlxText;
@@ -93,10 +93,10 @@ class MobileControlSelectSubState extends MusicBeatSubstate
         vpad.cameras = [ui];
         add(vpad);
 
-        newhbox = new FlxNewHitbox();
-        newhbox.visible = false;
-        newhbox.cameras = [ui];
-        add(newhbox);
+        hitbox = new FlxHitbox();
+        hitbox.visible = false;
+        hitbox.cameras = [ui];
+        add(hitbox);
         
         grpControls = new FlxText(0, 100, 0, '', 32);
 		grpControls.setFormat("VCR OSD Mono", 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK, true);
@@ -277,9 +277,9 @@ class MobileControlSelectSubState extends MusicBeatSubstate
         }
 
         if (daChoice != "Hitbox")
-            newhbox.visible = false;
+            hitbox.visible = false;
         else
-            newhbox.visible = true;
+            hitbox.visible = true;
 
         if (daChoice != "Hitbox" && daChoice != "Keyboard")
         {

@@ -1691,8 +1691,8 @@ class FunkinLua {
 
 		for (num in 1...5){
 			if (ClientPrefs.extraKeys >= num && key == Reflect.field(ClientPrefs, 'extraKeyReturn' + num)){
-				if (MusicBeatState.mobilec.newhbox != null)
-					extraControl = Reflect.getProperty(MusicBeatState.mobilec.newhbox, 'buttonExtra' + num);
+				if (MusicBeatState.mobilec.hitbox != null)
+					extraControl = Reflect.getProperty(MusicBeatState.mobilec.hitbox, 'buttonExtra' + num);
 				else
 					extraControl = Reflect.getProperty(MusicBeatState.mobilec.vpad, 'buttonExtra' + num);
 				if (Reflect.getProperty(extraControl, type))

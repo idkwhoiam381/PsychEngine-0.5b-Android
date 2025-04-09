@@ -19,7 +19,7 @@ import mobile.backend.*;
 import mobile.substates.*;
 import mobile.flixel.FlxVirtualPad;
 import mobile.backend.StorageUtil;
-import mobile.flixel.FlxNewHitbox;
+import mobile.flixel.FlxHitbox;
 import Alphabet;
 
 // Android

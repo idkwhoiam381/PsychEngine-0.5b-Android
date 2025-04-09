@@ -40,7 +40,7 @@ class MusicBeatState extends FlxUIState
 		_virtualpad = new FlxVirtualPad(DPad, Action);
 		add(_virtualpad);
 
-		controls.setVirtualPadUI(_virtualpad, DPad, Action);
+		controls.setVirtualPad(_virtualpad, DPad, Action, false);
 		trackedinputsUI = controls.trackedInputsUI;
 		controls.trackedInputsUI = [];
 		_virtualpad.alpha = ClientPrefs.VirtualPadAlpha;
@@ -68,13 +68,13 @@ class MusicBeatState extends FlxUIState
 		switch (mobilec.mode)
 		{
 			case VIRTUALPAD_RIGHT | VIRTUALPAD_LEFT | VIRTUALPAD_CUSTOM:
-				controls.setVirtualPadNOTES(mobilec.vpad, "FULL", "NONE");
+				controls.setVirtualPad(mobilec.vpad, "FULL", "NONE", true);
 				MusicBeatState.checkHitbox = false;
 			case DUO:
-				controls.setVirtualPadNOTES(mobilec.vpad, "DUO", "NONE");
+				controls.setVirtualPad(mobilec.vpad, "DUO", "NONE", true);
 				MusicBeatState.checkHitbox = false;
 			case HITBOX:
-			    controls.setNewHitBox(mobilec.newhbox);
+			    controls.setHitbox(mobilec.hitbox);
 				MusicBeatState.checkHitbox = true;
 			default:
 		}

@@ -98,7 +98,7 @@ class Config {
 class MobileControls extends FlxSpriteGroup {
 	public var mode:ControlsGroup = HITBOX;
 
-	public var newhbox:FlxNewHitbox;
+	public var hitbox:FlxHitbox;
 	public var vpad:FlxVirtualPad;
 
 	var config:Config;
@@ -147,11 +147,11 @@ class MobileControls extends FlxSpriteGroup {
 				add(vpad);		
 				vpad = extendConfig.loadcustom(vpad);
 			case 4:
-    			newhbox = new FlxNewHitbox();
-    			add(newhbox);
+    			hitbox = new FlxHitbox();
+    			add(hitbox);
 			default:
-				newhbox = new FlxNewHitbox();
-			    add(newhbox);
+				hitbox = new FlxHitbox();
+			    add(hitbox);
 		}
 	}
 

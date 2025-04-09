@@ -20,7 +20,7 @@ import openfl.geom.Matrix;
  *
  * @author Mihai Alexandru (M.A. Jigsaw)
  */
-class FlxNewHitbox extends FlxSpriteGroup
+class FlxHitbox extends FlxSpriteGroup
 {
 	public var buttonLeft:VirtualButton = new VirtualButton(0, 0);
 	public var buttonDown:VirtualButton = new VirtualButton(0, 0);
