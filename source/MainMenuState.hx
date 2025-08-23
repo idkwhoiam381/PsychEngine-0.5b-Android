@@ -77,7 +77,7 @@ class MainMenuState extends MusicBeatState
 		add(theBG);
 		
 
-		backdrop = new FlxBackdrop(Paths.image('backd'),XY,0,0, true, true);
+		var backdrop = new FlxBackdrop(Paths.image('backd'),XY,0,0);
 		backdrop.velocity.set(200, 110);
 		backdrop.updateHitbox();
 		backdrop.alpha = 0.5;
