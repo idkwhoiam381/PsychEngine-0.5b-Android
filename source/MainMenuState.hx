@@ -31,8 +31,14 @@ class MainMenuState extends MusicBeatState
 	var menuItems:FlxTypedGroup<FlxSprite>;
 	private var camGame:FlxCamera;
 	private var camAchievement:FlxCamera;
-	
-	var optionShit:Array<String> = ['story_mode', 'freeplay', 'extras', 'awards', 'options'];
+
+	var optionShit:Array<String> = [
+		'story_mode',
+		'freeplay',
+		#if MODS_ALLOWED 'mods', #end
+		'credits',
+		'options'
+	];
 
 	var char:FlxSprite;
 	var backdrop:FlxBackdrop;
@@ -143,19 +149,13 @@ class MainMenuState extends MusicBeatState
 		}
 		#end
 
+		addVirtualPad("UP_DOWN", "A_B_E");
+
 		super.create();
 
-		switch (FlxG.random.int(1, 6))
+		switch (FlxG.random.int(1, 2))
 		{
 			case 1:
-				char = new FlxSprite(100, 270).loadGraphic(Paths.image('mainmenu/bambiRemake'));//put your cords and image here
-				char.frames = Paths.getSparrowAtlas('mainmenu/bambiRemake');//here put the name of the xml
-				char.animation.addByPrefix('idleR', 'bambi idle', 24, true);//on 'idle normal' change it to your xml one
-				char.animation.play('idleR');//you can rename the anim however you want to
-				char.scrollFactor.set();
-				char.antialiasing = ClientPrefs.globalAntialiasing;
-				add(char);
-			case 2:
 				char = new FlxSprite(-700, -170).loadGraphic(Paths.image('mainmenu/Bamb'));//put your cords and image here
 				char.frames = Paths.getSparrowAtlas('mainmenu/Bamb');//here put the name of the xml
 				char.animation.addByPrefix('idleR', 'Bamb Idle', 24, true);//on 'idle normal' change it to your xml one
@@ -164,7 +164,8 @@ class MainMenuState extends MusicBeatState
 				char.scale.set(0.6, 0.6);
 				char.antialiasing = ClientPrefs.globalAntialiasing;
 				add(char);
-			case 3:
+
+			case 2:
 				char = new FlxSprite(-100, 120).loadGraphic(Paths.image('mainmenu/Banbi'));//put your cords and image here
 				char.frames = Paths.getSparrowAtlas('mainmenu/Banbi');//here put the name of the xml
 				char.animation.addByPrefix('idleR', 'Banbi Idle', 24, true);//on 'idle normal' change it to your xml one
@@ -173,35 +174,7 @@ class MainMenuState extends MusicBeatState
 				char.scale.set(0.7, 0.7);
 				char.antialiasing = ClientPrefs.globalAntialiasing;
 				add(char);
-
-				case 4:
-					char = new FlxSprite(100, 140).loadGraphic(Paths.image('mainmenu/OppositionX_Assets'));//put your cords and image here
-					char.frames = Paths.getSparrowAtlas('mainmenu/OppositionX_Assets');//here put the name of the xml
-					char.animation.addByPrefix('idleR', 'Idle', 24, true);//on 'idle normal' change it to your xml one
-					char.animation.play('idleR');//you can rename the anim however you want to
-					char.scrollFactor.set();
-					char.scale.set(1.5, 1.5);
-					char.antialiasing = ClientPrefs.globalAntialiasing;
-					add(char);
-
-					case 5:
-						char = new FlxSprite(50, -80).loadGraphic(Paths.image('mainmenu/Cheater'));//put your cords and image here
-						char.frames = Paths.getSparrowAtlas('mainmenu/Cheater');//here put the name of the xml
-						char.animation.addByPrefix('idleR', 'Cheater Idle', 24, true);//on 'idle normal' change it to your xml one
-						char.animation.play('idleR');//you can rename the anim however you want to
-						char.scrollFactor.set();
-						char.scale.set(0.7, 0.7);
-						char.antialiasing = ClientPrefs.globalAntialiasing;
-						add(char);
-					case 6:
-						char = new FlxSprite(-300, -170).loadGraphic(Paths.image('mainmenu/diambi'));//put your cords and image here
-						char.frames = Paths.getSparrowAtlas('mainmenu/diambi');//here put the name of the xml
-						char.animation.addByPrefix('idleR', 'diambi idle', 24, true);//on 'idle normal' change it to your xml one
-						char.animation.play('idleR');//you can rename the anim however you want to
-						char.scrollFactor.set();
-						char.scale.set(0.7, 0.7);
-						char.antialiasing = ClientPrefs.globalAntialiasing;
-						add(char);
+			
 					    
 
 		}
@@ -324,10 +297,12 @@ class MainMenuState extends MusicBeatState
 										MusicBeatState.switchState(new StoryMenuState());
 									case 'freeplay':
 										MusicBeatState.switchState(new FreeplayState());
-									case 'extras':
-										MusicBeatState.switchState(new ExtrasMenuState());
-									case 'awards':
-										MusicBeatState.switchState(new AchievementsMenuState());
+									#if MODS_ALLOWED
+									case 'mods':
+										MusicBeatState.switchState(new ModsMenuState());
+									#end
+									case 'credits':
+										MusicBeatState.switchState(new CreditsState());
 									case 'options':
 										MusicBeatState.switchState(new OptionsState());
 								}
@@ -336,8 +311,7 @@ class MainMenuState extends MusicBeatState
 					});
 				}
 			}
-			#if desktop
-			else if (FlxG.keys.justPressed.SEVEN)
+			else if (FlxG.keys.anyJustPressed(debugKeys) || _virtualpad.buttonE.justPressed)
 			{
 				selectedSomethin = true;
 				MusicBeatState.switchState(new MasterEditorMenu());
