@@ -77,7 +77,7 @@ class MainMenuState extends MusicBeatState
 		add(theBG);
 		
 
-		backdrop = new FlxBackdrop(Paths.image('backd'), 0.2, 0, true, true);
+		backdrop = new FlxBackdrop(Paths.image('backd'),XY,0,0, true, true);
 		backdrop.velocity.set(200, 110);
 		backdrop.updateHitbox();
 		backdrop.alpha = 0.5;
@@ -138,15 +138,6 @@ class MainMenuState extends MusicBeatState
 		// NG.core.calls.event.logEvent('swag').send();
 
 		changeItem();
-
-		#if ACHIEVEMENTS_ALLOWED
-	// Unlocks "Freaky on a Friday Night" achievement
-	function giveAchievement() {
-		add(new AchievementObject('friday_night_play', camAchievement));
-		FlxG.sound.play(Paths.sound('confirmMenu'), 0.7);
-		trace('Giving achievement "friday_night_play"');
-	}
-		#end
 
 		addVirtualPad("UP_DOWN", "A_B_E");
 
